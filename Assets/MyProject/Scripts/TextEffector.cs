@@ -25,7 +25,7 @@ public class TextEffector : MonoBehaviour
         sequence.Append(_textLabel.DOText(_textToReplace, _durationTime, _reachTextEnabled, ScrambleMode.None))
             .Append(_textLabel.DOText(_textToAdd, _durationTime, _reachTextEnabled, ScrambleMode.None).SetRelative())         
             .Append(_textLabel.DOText(_textToScramble, _durationTime, _reachTextEnabled, ScrambleMode.All))
-            .Append(_textLabel.DOColor(_endColor, _durationTime))           
+            .Join(_textLabel.DOColor(_endColor, _durationTime))           
             .SetLoops(_repeat, _loopType)
             .SetDelay(_delayTime);       
     }
