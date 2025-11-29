@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,13 +21,40 @@ public class TextEffector : MonoBehaviour
     {
         _textLabel.text = _textDefault;
 
+        Sequence sequence = CreateSequenceAnimation();
+        sequence.Play();
+    }
+
+    private Sequence CreateSequenceAnimation()
+    {
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(_textLabel.DOText(_textToReplace, _durationTime, _reachTextEnabled, ScrambleMode.None))
-            .Append(_textLabel.DOText(_textToAdd, _durationTime, _reachTextEnabled, ScrambleMode.None).SetRelative())         
-            .Append(_textLabel.DOText(_textToScramble, _durationTime, _reachTextEnabled, ScrambleMode.All))
-            .Join(_textLabel.DOColor(_endColor, _durationTime))           
+        return sequence.Append(ReplaceText(_textToReplace))
+            .Append(AddText(_textToAdd))
+            .Append(ToScrambleText(_textToScramble))
+            .Join(ApplyEndColorToText(_endColor))
             .SetLoops(_repeat, _loopType)
-            .SetDelay(_delayTime);       
+            .SetDelay(_delayTime)
+            .Pause();
+    }
+
+    private Tween ApplyEndColorToText(Color endColor)
+    {
+        return _textLabel.DOColor(endColor, _durationTime);
+    }
+
+    private Tween ToScrambleText(string text)
+    {
+        return _textLabel.DOText(text, _durationTime, _reachTextEnabled, ScrambleMode.All);
+    }
+
+    private Tween AddText(string text)
+    {
+        return _textLabel.DOText(text, _durationTime, _reachTextEnabled, ScrambleMode.None).SetRelative();
+    }
+
+    private Tween ReplaceText(string text)
+    {
+        return _textLabel.DOText(text, _durationTime, _reachTextEnabled, ScrambleMode.None);
     }
 }

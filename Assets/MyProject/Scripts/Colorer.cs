@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class ColorProvider : MonoBehaviour
+public class Colorer : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private Color _endColor;
@@ -12,6 +12,11 @@ public class ColorProvider : MonoBehaviour
 
     private void Start()
     {
-        _meshRenderer.material.DOColor(_endColor, _durationTime).SetLoops(_repeat, _loopType).SetDelay(_delayTime);
+        ApplyEndColor(_endColor);
+    }
+
+    private void ApplyEndColor(Color endColor)
+    {
+        _meshRenderer.material.DOColor(endColor, _durationTime).SetLoops(_repeat, _loopType).SetDelay(_delayTime);
     }
 }

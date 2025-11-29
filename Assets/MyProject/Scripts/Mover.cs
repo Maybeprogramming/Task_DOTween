@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class MoveProvider : MonoBehaviour
+public class Mover : MonoBehaviour
 {
     [SerializeField] private float _durationTime;
     [SerializeField] private bool _snapping;
@@ -12,6 +12,11 @@ public class MoveProvider : MonoBehaviour
 
     private void Start()
     {
-        transform.DOMove(_targetToMove.position, _durationTime, _snapping).SetLoops(_repeat,_loopType).SetDelay(_delayTime);
+        MoveTo(_targetToMove.position);
+    }
+
+    private void MoveTo(Vector3 target)
+    {
+        transform.DOMove(target, _durationTime, _snapping).SetLoops(_repeat, _loopType).SetDelay(_delayTime);
     }
 }
